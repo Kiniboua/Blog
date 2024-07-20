@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post
-from .forms import PostForm
+from .forms import PostForm, EditForm
 
 #def home (request):
    # return render(request, "home.html", {})
@@ -24,4 +24,11 @@ class AddPostView(CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user  # Définir l'auteur comme utilisateur connecté
         return super().form_valid(form)
+
+
+class UpdatePostView(UpdateView):
+    model = Post
+    form_class = EditForm
+    template_name = 'update_post.html'
+    #fields = ['title', 'title_tag', 'body']
 
